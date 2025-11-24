@@ -6,115 +6,133 @@
     <title>CODERXSA - SERVICE</title>
     <script src="https://cdn.tailwindcss.com"></script>
 <style>
-    :root {
-        --color-dark-void: #0a0a0a;
-        --color-primary-nebula: #6d28d9;
-        --color-secondary-nebula: #db2777;
-        --color-accent-glow: #0ea5e9;
-        --glass-bg-opacity: 0.08;
-        --glass-blur: 20px;
-        --shadow-glow-color: rgba(14, 165, 233, 0.2);
-    }
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--color-dark-void);
-        color: #E2E8F0;
+:root {
+    --color-dark-void: #050505;
+    --color-primary-nebula: #6d28d9;
+    --color-secondary-nebula: #db2777;
+    --color-accent-glow: #0ea5e9;
 
-        background-image: 
-            radial-gradient(at 15% 75%, rgba(109, 40, 217, 0.15) 0px, transparent 40%),
-            radial-gradient(at 85% 25%, rgba(219, 39, 119, 0.12) 0px, transparent 40%),
-            radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 60%);
-        overflow-x: hidden;
-    }
-    .glass-card {
-        background: rgba(255, 255, 255, var(--glass-bg-opacity));
-        backdrop-filter: blur(var(--glass-blur));
-        -webkit-backdrop-filter: blur(var(--glass-blur));
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-blur: 25px;
 
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        box-shadow:
-            0 15px 60px rgba(0, 0, 0, 0.65),
-            0 0 40px var(--shadow-glow-color);
+    --glow-shadow: rgba(14, 165, 233, 0.25);
+    --soft-shadow: rgba(0, 0, 0, 0.55);
+}
 
-        transition: all 0.5s ease;
-        position: relative;
-        overflow: hidden;
-        border-radius: 18px;
-    }
-    .glass-card:hover {
-        transform: scale(1.01);
-        border-color: rgba(255, 255, 255, 0.25);
-        box-shadow:
-            0 20px 90px rgba(0, 0, 0, 0.8),
-            0 0 70px var(--shadow-glow-color);
-    }
-    .glass-card:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -150%;
-        width: 50%;
-        height: 100%;
-        background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.25) 50%,
-            transparent
-        );
-        transform: skewX(-20deg);
-        transition: 0.8s;
-        pointer-events: none;
-    }
-    .glass-card:hover:before {
-        left: 150%;
-    }
-    @keyframes glowing-border {
-        0% { box-shadow: 0 0 6px var(--color-primary-nebula); }
-        50% { box-shadow: 0 0 20px var(--color-secondary-nebula), 0 0 35px var(--color-accent-glow); }
-        100% { box-shadow: 0 0 6px var(--color-primary-nebula); }
-    }
-    .glow-button {
-        animation: glowing-border 4s infinite alternate;
-    }
-    .featured-card-border:before {
-        background: linear-gradient(135deg,
-            var(--color-primary-nebula),
-            var(--color-secondary-nebula),
-            var(--color-accent-glow)
-        );
-        animation: glowing-border 5s infinite alternate;
-    }
-    .hero-title-glow {
-        text-shadow:
-            0 0 10px rgba(255, 255, 255, 0.45),
-            0 0 20px var(--color-accent-glow),
-            0 0 45px var(--color-primary-nebula),
-            0 0 75px rgba(219, 39, 119, 0.35);
-    }
-    .particle-bg {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        pointer-events: none;
-    }
-    .star {
-        position: absolute;
-        width: 1.5px;
-        height: 1.5px;
-        background: #ffffff;
-        border-radius: 50%;
-        opacity: 0.55;
-        animation: star-drift 110s linear infinite;
-    }
-    .star:nth-child(1) { top: 15%; left: 25%; animation-duration: 120s; }
-    .star:nth-child(2) { top: 55%; left: 75%; animation-duration: 95s; }
-    .star:nth-child(3) { top: 85%; left: 35%; animation-duration: 150s; }
-    .star:nth-child(4) { top: 35%; left: 65%; animation-duration: 105s; }
-    @keyframes star-drift {
-        0%   { transform: translate(0, 0); opacity: 0.55; }
-        50%  { transform: translate(10vw, 5vh); opacity: 1; }
-        100% { transform: translate(0, 0); opacity: 0.55; }
-    }
+body {
+    background-color: var(--color-dark-void);
+    color: #E2E8F0;
+    font-family: 'Inter', sans-serif;
+
+    background-image: 
+        radial-gradient(at 10% 85%, rgba(109, 40, 217, 0.12) 0px, transparent 45%),
+        radial-gradient(at 90% 20%, rgba(219, 39, 119, 0.10) 0px, transparent 55%),
+        radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.07) 0px, transparent 60%);
+    overflow-x: hidden;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+
+    border-radius: 20px;
+    padding: 1.5rem;
+
+    box-shadow:
+        0 8px 40px var(--soft-shadow),
+        0 0 30px var(--glow-shadow);
+
+    transition: transform .45s cubic-bezier(.25,.46,.45,.94), 
+                box-shadow .45s ease, 
+                border .45s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.25);
+
+    box-shadow:
+        0 15px 60px rgba(0, 0, 0, 0.75),
+        0 0 40px var(--glow-shadow);
+}
+
+
+.glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    left: -120%;
+    top: 0;
+    width: 60%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+    transition: 1s ease;
+    pointer-events: none;
+}
+
+.glass-card:hover::before {
+    left: 130%;
+}
+
+@keyframes glow-pulse {
+    0% { box-shadow: 0 0 6px var(--color-accent-glow); }
+    50% { box-shadow: 0 0 20px var(--color-secondary-nebula), 0 0 40px var(--color-accent-glow); }
+    100% { box-shadow: 0 0 6px var(--color-accent-glow); }
+}
+
+.glow-button {
+    animation: glow-pulse 4s infinite alternate;
+    transition: transform 0.35s ease;
+}
+
+.glow-button:hover {
+    transform: scale(1.06);
+}
+
+/* ============================================================
+   Hero Title Glow (more refined)
+   ============================================================ */
+.hero-title-glow {
+    text-shadow:
+        0 0 12px rgba(255, 255, 255, 0.4),
+        0 0 25px var(--color-accent-glow),
+        0 0 50px var(--color-primary-nebula),
+        0 0 90px rgba(219, 39, 119, 0.35);
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: star-float 22s ease-in-out infinite;
+}
+
+@keyframes star-float {
+    0% { transform: translateY(0px) translateX(0px); opacity: .5; }
+    50% { transform: translateY(-35px) translateX(25px); opacity: 1; }
+    100% { transform: translateY(0px) translateX(0px); opacity: .5; }
+}
+
+
+@keyframes nebula-drift {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
 </style>
 
 </head>
