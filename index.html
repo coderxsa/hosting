@@ -6,18 +6,21 @@
     <title>CODERXSA - SERVICE</title>
     <script src="https://cdn.tailwindcss.com"></script>
 <style>
+/* ============================================================
+   Updated to Nebula Cosmo Theme (Removed all Red/Rose/Pink)
+   ============================================================ */
 :root {
     --color-dark-void: #050505;
-    --color-primary-nebula: #6d28d9;
-    --color-secondary-nebula: #db2777;
-    --color-accent-glow: #0ea5e9;
+    --color-primary-nebula: #6d28d9;     /* Deep Violet */
+    --color-secondary-nebula: #a855f7;  /* New strong Purple (Violet 600) */
+    --color-accent-glow: #4f46e5;       /* Indigo/Electric Violet Accent */
 
-    --glass-bg: rgba(255, 255, 255, 0.04); /* Adjusted opacity for a deeper look */
-    --glass-border: rgba(255, 255, 255, 0.1); /* Slight border change */
-    --glass-blur: 30px; /* Increased blur for smoother glass effect */
+    --glass-bg: rgba(255, 255, 255, 0.04); 
+    --glass-border: rgba(255, 255, 255, 0.1); 
+    --glass-blur: 30px; /* Increased blur for smoother feel */
 
-    --glow-shadow: rgba(14, 165, 233, 0.35); /* Increased glow intensity */
-    --soft-shadow: rgba(0, 0, 0, 0.7); /* Deeper shadow for contrast */
+    --glow-shadow: rgba(79, 70, 229, 0.35); /* Updated glow shadow to new accent glow */
+    --soft-shadow: rgba(0, 0, 0, 0.7); 
 }
 
 body {
@@ -25,20 +28,21 @@ body {
     color: #E2E8F0;
     font-family: 'Inter', sans-serif;
 
+    /* Updated background gradients to only use purple/blue/violet */
     background-image: 
-        radial-gradient(at 10% 85%, rgba(109, 40, 217, 0.15) 0px, transparent 50%), /* Increased opacity */
-        radial-gradient(at 90% 20%, rgba(219, 39, 119, 0.12) 0px, transparent 60%),
-        radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 65%);
+        radial-gradient(at 10% 85%, rgba(109, 40, 217, 0.15) 0px, transparent 50%), /* Primary Nebula */
+        radial-gradient(at 90% 20%, rgba(79, 70, 229, 0.15) 0px, transparent 60%), /* New Accent Glow */
+        radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 65%); /* Secondary Nebula */
     overflow-x: hidden;
 }
 
 /* Added transition for all elements for overall smoothness */
 * {
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .glass-card {
-    position: relative; /* Needed for the ::before shine effect */
+    position: relative;
     background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -48,23 +52,23 @@ body {
     padding: 1.5rem;
 
     box-shadow:
-        0 8px 45px var(--soft-shadow), /* Slightly bigger shadow */
-        0 0 35px var(--glow-shadow); /* Bigger glow */
+        0 8px 45px var(--soft-shadow),
+        0 0 35px var(--glow-shadow);
 
     /* Optimized transition curve for smoother feel */
     transition: transform .5s cubic-bezier(.23, 1, .32, 1), 
                 box-shadow .5s ease, 
                 border .5s ease;
-    overflow: hidden; /* Contains the shine effect */
+    overflow: hidden;
 }
 
 .glass-card:hover {
-    transform: translateY(-8px) scale(1.02); /* More pronounced lift */
-    border-color: rgba(255, 255, 255, 0.35); /* Brighter border on hover */
+    transform: translateY(-8px) scale(1.02); 
+    border-color: rgba(255, 255, 255, 0.35); 
 
     box-shadow:
-        0 20px 80px rgba(0, 0, 0, 0.85), /* Deeper shadow */
-        0 0 50px var(--glow-shadow); /* Brighter glow */
+        0 20px 80px rgba(0, 0, 0, 0.85), 
+        0 0 50px var(--glow-shadow); 
 }
 
 
@@ -72,7 +76,7 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    left: -180%; /* Start further left */
+    left: -180%; 
     top: 0;
     width: 60%;
     height: 100%;
@@ -80,43 +84,41 @@ body {
     background: linear-gradient(
         90deg,
         transparent,
-        rgba(255, 255, 255, 0.25), /* Increased shine intensity */
+        rgba(255, 255, 255, 0.25), 
         transparent
     );
 
     transform: skewX(-20deg);
-    transition: 1.2s cubic-bezier(.16, 1, .3, 1); /* Slower, smoother shine */
+    transition: 1.2s cubic-bezier(.16, 1, .3, 1); 
     pointer-events: none;
 }
 
 .glass-card:hover::before {
-    left: 180%; /* Move further right */
+    left: 180%; 
 }
 
 @keyframes glow-pulse {
+    /* Updated to use only purple/blue glow */
     0% { box-shadow: 0 0 8px var(--color-accent-glow); }
-    50% { box-shadow: 0 0 25px var(--color-secondary-nebula), 0 0 50px var(--color-accent-glow); } /* More intense pulse */
+    50% { box-shadow: 0 0 25px var(--color-secondary-nebula), 0 0 50px var(--color-accent-glow); } 
     100% { box-shadow: 0 0 8px var(--color-accent-glow); }
 }
 
 .glow-button {
-    animation: glow-pulse 5s infinite alternate; /* Slower, more subtle animation */
+    animation: glow-pulse 5s infinite alternate; 
     transition: transform 0.4s cubic-bezier(.23, 1, .32, 1);
 }
 
 .glow-button:hover {
-    transform: scale(1.08); /* More noticeable hover scale */
+    transform: scale(1.08); 
 }
 
-/* ============================================================
-   Hero Title Glow (more refined)
-   ============================================================ */
 .hero-title-glow {
     text-shadow:
-        0 0 15px rgba(255, 255, 255, 0.5), /* Stronger white center */
+        0 0 15px rgba(255, 255, 255, 0.5), 
         0 0 30px var(--color-accent-glow),
         0 0 60px var(--color-primary-nebula),
-        0 0 100px rgba(219, 39, 119, 0.45); /* Deeper, wider color spill */
+        0 0 100px rgba(79, 70, 229, 0.45); /* Uses the new accent color */
 }
 
 .star {
@@ -126,7 +128,7 @@ body {
     background: #fff;
     border-radius: 50%;
     opacity: 0.7;
-    animation: star-float 25s ease-in-out infinite alternate; /* Slower and alternate direction */
+    animation: star-float 25s ease-in-out infinite alternate;
 }
 
 @keyframes star-float {
@@ -141,18 +143,11 @@ body {
     100% { background-position: 100% 100%; }
 }
 
-/* ============================================================
-   Parallax/Scroll Effect for Services Section
-   ============================================================ */
+/* Scroll Effect Class */
 .service-content-wrapper {
-    /* Apply a slight movement effect based on scroll. This requires
-       JavaScript for true parallax, but we can set up the CSS */
     will-change: transform, opacity;
     transition: transform 0.8s ease-out, opacity 0.8s ease-out;
 }
-
-/* The actual scroll/parallax effect would be added via a small
-   JavaScript snippet, which is included below the body */
 </style>
 
 </head>
