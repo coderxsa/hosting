@@ -8,33 +8,31 @@
 <style>
 
 :root {
-    --color-dark-void: #050505;
-    --color-primary-nebula: #6d28d9; 
-    --color-secondary-nebula: #a855f7; 
-    --color-accent-glow: #4f46e5; 
-
-    --glass-bg: rgba(255, 255, 255, 0.04); 
-    --glass-border: rgba(255, 255, 255, 0.1); 
-    --glass-blur: 30px; 
-
-    --glow-shadow: rgba(79, 70, 229, 0.35);
-    --soft-shadow: rgba(0, 0, 0, 0.7); 
+    --color-dark-void: #050308;
+    --color-primary-nebula: #7C3AED;
+    --color-secondary-nebula: #A78BFA;
+    --color-accent-glow: #3B82F6;
+    --color-text-light: #E2E8F0;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-blur: 20px;
+    --glow-shadow-primary: rgba(124, 58, 237, 0.6); 
+    --glow-shadow-secondary: rgba(59, 130, 246, 0.4);
+    --soft-shadow: rgba(0, 0, 0, 0.9);
 }
 
 body {
     background-color: var(--color-dark-void);
-    color: #E2E8F0;
+    color: var(--color-text-light);
     font-family: 'Inter', sans-serif;
-
-    /* Updated background gradients to only use purple/blue/violet */
-    background-image: 
-        radial-gradient(at 10% 85%, rgba(109, 40, 217, 0.15) 0px, transparent 50%), /* Primary Nebula */
-        radial-gradient(at 90% 20%, rgba(79, 70, 229, 0.15) 0px, transparent 60%), /* New Accent Glow */
-        radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 65%); /* Secondary Nebula */
+    background-image:
+        radial-gradient(at 10% 85%, var(--color-primary-nebula) 0px, transparent 50%),
+        radial-gradient(at 90% 20%, var(--color-accent-glow) 0px, transparent 60%),
+        radial-gradient(at 50% 100%, var(--color-secondary-nebula) 0px, transparent 65%);
+    background-blend-mode: soft-light;
     overflow-x: hidden;
 }
 
-/* Added transition for all elements for overall smoothness */
 * {
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -47,91 +45,86 @@ body {
     border: 1px solid var(--glass-border);
 
     border-radius: 20px;
-    padding: 1.5rem;
 
     box-shadow:
-        0 8px 45px var(--soft-shadow),
-        0 0 35px var(--glow-shadow);
+        0 10px 45px var(--soft-shadow),
+        0 0 40px var(--glow-shadow-primary);
 
-    /* Optimized transition curve for smoother feel */
-    transition: transform .5s cubic-bezier(.23, 1, .32, 1), 
-                box-shadow .5s ease, 
-                border .5s ease;
+    transition: transform .5s cubic-bezier(.23, 1, .32, 1),
+                box-shadow .5s ease;
     overflow: hidden;
 }
 
 .glass-card:hover {
-    transform: translateY(-8px) scale(1.02); 
-    border-color: rgba(255, 255, 255, 0.35); 
-
+    transform: translateY(-5px) scale(1.01);
+    border-color: rgba(255, 255, 255, 0.35);
     box-shadow:
-        0 20px 80px rgba(0, 0, 0, 0.85), 
-        0 0 50px var(--glow-shadow); 
+        0 25px 90px rgba(0, 0, 0, 0.95),
+        0 0 60px var(--glow-shadow-primary);
 }
-
 
 .glass-card::before {
     content: "";
     position: absolute;
     inset: 0;
-    left: -180%; 
+    left: -180%;
     top: 0;
     width: 60%;
     height: 100%;
-
     background: linear-gradient(
         90deg,
         transparent,
-        rgba(255, 255, 255, 0.25), 
+        rgba(255, 255, 255, 0.25),
         transparent
     );
-
     transform: skewX(-20deg);
-    transition: 1.2s cubic-bezier(.16, 1, .3, 1); 
+    transition: 1.2s cubic-bezier(.16, 1, .3, 1);
     pointer-events: none;
 }
 
 .glass-card:hover::before {
-    left: 180%; 
+    left: 180%;
 }
 
+
 @keyframes glow-pulse {
-    /* Updated to use only purple/blue glow */
     0% { box-shadow: 0 0 8px var(--color-accent-glow); }
-    50% { box-shadow: 0 0 25px var(--color-secondary-nebula), 0 0 50px var(--color-accent-glow); } 
+    50% { box-shadow: 0 0 20px var(--color-secondary-nebula), 0 0 40px var(--color-accent-glow); }
     100% { box-shadow: 0 0 8px var(--color-accent-glow); }
 }
 
 .glow-button {
-    animation: glow-pulse 5s infinite alternate; 
+    animation: glow-pulse 4s infinite alternate;
     transition: transform 0.4s cubic-bezier(.23, 1, .32, 1);
 }
 
 .glow-button:hover {
-    transform: scale(1.08); 
+    transform: scale(1.05);
 }
+
 
 .hero-title-glow {
     text-shadow:
-        0 0 15px rgba(255, 255, 255, 0.5), 
-        0 0 30px var(--color-accent-glow),
-        0 0 60px var(--color-primary-nebula),
-        0 0 100px rgba(79, 70, 229, 0.45); /* Uses the new accent color */
+        0 0 10px rgba(255, 255, 255, 0.5),
+        0 0 35px var(--color-accent-glow),
+        0 0 70px var(--color-primary-nebula),
+        0 0 120px rgba(124, 58, 237, 0.5);
 }
+
 
 .star {
     position: absolute;
-    width: 2px;
-    height: 2px;
+    width: 1px; 
+    height: 1px;
     background: #fff;
     border-radius: 50%;
-    opacity: 0.7;
-    animation: star-float 25s ease-in-out infinite alternate;
+    opacity: 0;
+    pointer-events: none;
 }
 
 @keyframes star-float {
     0% { transform: translateY(0px) translateX(0px); opacity: .7; }
-    50% { transform: translateY(-40px) translateX(30px); opacity: 1; }
+    50% { transform: translateY(-50px) translateX(40px); opacity: 1; }
     100% { transform: translateY(0px) translateX(0px); opacity: .7; }
 }
 
@@ -141,10 +134,9 @@ body {
     100% { background-position: 100% 100%; }
 }
 
-/* Scroll Effect Class */
 .service-content-wrapper {
     will-change: transform, opacity;
-    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+    transition: transform 0.8s cubic-bezier(.16, 1, .3, 1), opacity 0.8s ease-out;
 }
 </style>
 
@@ -172,60 +164,65 @@ body {
             </div>
         </div>
     </nav>
+    
     <header id="hero" class="relative min-h-screen flex items-center justify-center pb-24 overflow-hidden">
-        <div class="particle-bg">
-            <div class="star" style="top: 15%; left: 25%;"></div>
-            <div class="star" style="top: 55%; left: 75%;"></div>
-            <div class="star" style="top: 85%; left: 35%;"></div>
-            <div class="star" style="top: 35%; left: 65%;"></div>
-        </div>
-        <div class="relative z-10 max-w-6xl mx-auto text-center px-4">
-            <div class="glass-card p-12 sm:p-20 md:p-24 rounded-[3rem] shadow-2xl">
-                <h1 class="text-7xl sm:text-8xl lg:text-[7.5rem] font-black mb-6 tracking-tighter leading-none hero-title-glow" style="
-                    background: linear-gradient(45deg, #ffffff, var(--color-accent-glow), var(--color-secondary-nebula));
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                ">
-                    CODERXSA
-                </h1>
-                <p class="text-xl sm:text-2xl font-light text-gray-300 mb-12 max-w-4xl mx-auto">
-                    The ultimate nexus for <strong style="color: var(--color-accent-glow);">Hyper-Speed VPS</strong>, bespoke <strong style="color: var(--color-secondary-nebula);">Automation Solutions</strong>, and elite digital performance.
-                </p>
+        <div class="particle-bg absolute inset-0">
+             </div>
+        <div class="relative z-10 max-w-6xl mx-auto text-center px-4 pt-24">
+            
+            <h1 class="text-8xl sm:text-9xl lg:text-[10rem] font-black mb-6 tracking-tighter leading-none hero-title-glow" style="
+                /* Remove white from gradient start to enhance transparent/etched look */
+                background: linear-gradient(45deg, var(--color-text-light), var(--color-accent-glow), var(--color-secondary-nebula));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                padding-bottom: 2rem; /* Add padding for the glow */
+            ">
+                CODERXSA
+            </h1>
+            <p class="text-xl sm:text-3xl font-light text-gray-300 mb-12 max-w-4xl mx-auto" style="
+                text-shadow: 0 0 10px rgba(124, 58, 237, 0.4); /* Subtly lift the text */
+            ">
+                The ultimate nexus for <strong style="color: var(--color-accent-glow);">Hyper-Speed VPS</strong>, bespoke <strong style="color: var(--color-secondary-nebula);">Automation Solutions</strong>, and elite digital performance.
+            </p>
                 
-                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                    <a href="#pricing" class="px-12 py-4 rounded-full font-extrabold text-xl text-white transition duration-500 glow-button uppercase"
-                        style="background: linear-gradient(90deg, var(--color-primary-nebula), var(--color-secondary-nebula));">
-                        Deploy Now
-                    </a>
-                    <a href="#services" class="px-12 py-4 rounded-full font-bold text-xl border-2 border-white/30 text-white hover:border-sky-400 transition duration-300 bg-white/5 backdrop-blur-sm uppercase">
-                        Learn More
-                    </a>
-                </div>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="#pricing" class="px-12 py-4 rounded-full font-extrabold text-xl text-white transition duration-500 glow-button uppercase"
+                    style="background: linear-gradient(90deg, var(--color-primary-nebula), var(--color-secondary-nebula));">
+                    Deploy Now
+                </a>
+                <a href="#services" class="px-12 py-4 rounded-full font-bold text-xl border-2 border-white/30 text-white hover:border-sky-400 transition duration-300 bg-white/5 backdrop-blur-sm uppercase">
+                    Learn More
+                </a>
             </div>
+            
         </div>
     </header>
+
+    <div class="h-1 bg-gradient-to-r from-transparent via-violet-500 to-transparent w-full max-w-7xl mx-auto px-4 opacity-70"></div>
+
     <section id="services" class="py-20 md:py-36">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest">
+            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest text-shadow-lg" style="text-shadow: 0 0 15px var(--color-secondary-nebula);">
                 Service Matrix
             </h2>
             <p class="text-center text-gray-400 mb-24 text-lg">Engineered for speed, reliability, and automation.</p>
             <div class="space-y-32">
+                
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center service-content-wrapper">
                     <div class="lg:pr-16">
-                        <div class="feature-icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mb-8 bg-gradient-to-br from-sky-400 to-violet-500 shadow-2xl shadow-sky-400/30">
+                        <div class="feature-icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mb-8 bg-gradient-to-br from-blue-400 to-indigo-600 shadow-2xl shadow-blue-400/40">
                             <span class="text-4xl text-white">🚀</span>
                         </div>
                         <h3 class="text-4xl font-bold mb-4 text-white">High-Speed NVMe VPS Hosting</h3>
                         <p class="text-gray-300 text-xl mb-8">
-                            Experience zero-compromise performance with dedicated NVMe SSDs, guaranteeing ultra-low latency and unparalleled reliability for mission-critical applications or demanding game servers.
+                            Experience zero-compromise performance with dedicated NVMe SSDs, guaranteeing **ultra-low latency** and unparalleled reliability for mission-critical applications or demanding game servers.
                         </p>
                         <ul class="space-y-3 text-lg text-gray-400">
                             <li class="flex items-center space-x-3"><span class="text-green-400 font-black">◎</span><span>Tier-1 Global Infrastructure</span></li>
                             <li class="flex items-center space-x-3"><span class="text-green-400 font-black">◎</span><span>Root Access & Dedicated Resources</span></li>
                         </ul>
                     </div>
-                    <div class="glass-card p-6 rounded-3xl shadow-2xl border-sky-400/50 hover:shadow-sky-400/40">
+                    <div class="glass-card p-6 rounded-3xl border-sky-400/50 hover:shadow-sky-400/40">
                         <div class="h-80 bg-black/60 rounded-xl flex items-center justify-center border border-white/20">
                             <pre class="text-sm sm:text-base text-green-300/90 p-6 font-mono w-full text-left overflow-auto">
 [user@coderxsa ~]$ <span style="color: var(--color-accent-glow);">systemctl status main_app</span>
@@ -242,24 +239,25 @@ body {
                         </div>
                     </div>
                 </div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center service-content-wrapper">
-                    <div class="glass-card p-6 rounded-3xl shadow-2xl border-rose-400/50 lg:order-2 hover:shadow-rose-400/40">
+                    <div class="glass-card p-6 rounded-3xl border-rose-400/50 lg:order-2 hover:shadow-rose-400/40">
                         <div class="h-80 bg-black/60 rounded-xl flex flex-col items-center justify-center border border-white/20 p-6">
                             <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-6" style="color: var(--color-secondary-nebula);"><path d="M12 18V6"/><path d="M15 15l-3 3-3-3"/><path d="M9 9l3-3 3 3"/><path d="M21 12H3"/></svg>
                             <p class="text-2xl font-bold text-white mb-2">WhatsApp / Gaming Automation</p>
                             <p class="text-sm text-gray-400">Custom API integration for seamless workflow execution.</p>
-                            <div class="mt-4 bg-white/10 p-3 rounded-xl text-sm" style="color: var(--color-primary-nebula);">
+                            <div class="mt-4 bg-white/10 p-3 rounded-xl text-sm font-semibold" style="color: var(--color-primary-nebula);">
                                 Status: 99% Latency Score ⚡️
                             </div>
                         </div>
                     </div>
                     <div class="lg:pr-16 lg:order-1">
-                        <div class="feature-icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mb-8 bg-gradient-to-br from-rose-500 to-purple-800 shadow-2xl shadow-rose-500/30">
+                        <div class="feature-icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mb-8 bg-gradient-to-br from-rose-500 to-purple-800 shadow-2xl shadow-rose-500/40">
                             <span class="text-4xl text-white">🤖</span>
                         </div>
                         <h3 class="text-4xl font-bold mb-4 text-white">Bespoke Bot Solutions</h3>
                         <p class="text-gray-300 text-xl mb-8">
-                            From automating customer interactions via WhatsApp API to providing optimized Fortnite bot lobbies, we build specialized bots that deliver results, efficiency, and a competitive edge.
+                            From automating customer interactions via WhatsApp API to providing optimized Fortnite bot lobbies, we build specialized bots that deliver **efficiency** and a competitive edge.
                         </p>
                         <ul class="space-y-3 text-lg text-gray-400 mb-8">
                             <li class="flex items-center space-x-3"><span class="text-green-400 font-black">◎</span><span>Customizable Flow Logic</span></li>
@@ -276,27 +274,29 @@ body {
             </div>
         </div>
     </section>
+
     <section id="android-app" class="py-20 md:py-36 bg-white/5 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest">
+            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest text-shadow-lg" style="text-shadow: 0 0 15px var(--color-accent-glow);">
                 Android App Access
             </h2>
             <p class="text-center text-gray-400 mb-24 text-lg">
                 Get our services on your Android device—fully free, risk-free, and with alternative payment options for VPS panels and Fortnite bot lobbies.
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-16 items-start">
-                <div class="glass-card p-8 rounded-3xl shadow-2xl border-sky-400/50 hover:shadow-sky-400/40 text-center">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+                
+                <div class="glass-card p-8 rounded-3xl border-sky-400/50 hover:shadow-sky-400/40 text-center">
                     <div class="w-24 h-24 mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-sky-400 to-violet-500 rounded-full shadow-2xl">
                         <span class="text-5xl text-white">📱</span>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-white">Mobile Control Panel</h3>
                     <p class="text-gray-300">
-                        Manage VPS, deploy bots, and automate workflows directly from your Android device with a smooth, responsive app interface.
+                        Manage VPS, deploy bots, and automate workflows directly from your Android device with a smooth, **responsive app interface**.
                     </p>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl shadow-2xl border-rose-400/50 hover:shadow-rose-400/40 text-center">
+                <div class="glass-card p-8 rounded-3xl border-rose-400/50 hover:shadow-rose-400/40 text-center">
                     <div class="w-24 h-24 mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-rose-500 to-purple-800 rounded-full shadow-2xl">
                         <span class="text-5xl text-white">💾</span> </div>
                     <h3 class="text-2xl font-bold mb-4 text-white">WhatsApp View Saver</h3>
@@ -305,13 +305,13 @@ body {
                     </p>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl shadow-2xl border-green-400/50 hover:shadow-green-400/40 text-center">
+                <div class="glass-card p-8 rounded-3xl border-green-400/50 hover:shadow-green-400/40 text-center">
                     <div class="w-24 h-24 mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-green-400 to-cyan-500 rounded-full shadow-2xl">
                         <span class="text-5xl text-white">💳</span>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-white">Ad-Based Payments</h3>
                     <p class="text-gray-300">
-                        Access premium features like VPS hosting and Fortnite bots without a credit card by watching rewarded ads in the app.
+                        Access premium features like VPS hosting and Fortnite bots without a credit card by watching **rewarded ads** in the app.
                     </p>
                 </div>
             </div>
@@ -329,7 +329,7 @@ body {
 
     <section id="fortnite-private" class="py-20 md:py-36 bg-white/[0.03] backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest">
+            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest text-shadow-lg" style="text-shadow: 0 0 15px var(--color-secondary-nebula);">
                 Fortnite Bot Lobby Access (Elite)
             </h2>
             <p class="text-center text-gray-400 mb-20 text-lg">Guaranteed easy XP and challenge completion with dedicated servers.</p>
@@ -342,7 +342,7 @@ body {
                         </div>
                         <h3 class="text-4xl font-black mb-4 tracking-tighter" style="color: var(--color-accent-glow);">Private Matchmaker Access</h3>
                         <p class="text-xl text-gray-300 mb-10">
-                            Bypass SBMM (Skill-Based Matchmaking) and join lobbies designed exclusively for easy gameplay, fast leveling, and V-Buck earning.
+                            Bypass **SBMM (Skill-Based Matchmaking)** and join lobbies designed exclusively for easy gameplay, fast leveling, and V-Buck earning.
                         </p>
                     </div>
 
@@ -380,7 +380,7 @@ body {
 
     <section id="pricing" class="py-20 md:py-36">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest">
+            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest text-shadow-lg" style="text-shadow: 0 0 15px var(--color-primary-nebula);">
                 Pricing Vps (SOON)
             </h2>
             <p class="text-center text-gray-400 mb-20 text-lg">Transparent costs for exceptional performance.</p>
@@ -403,7 +403,7 @@ body {
                     </a>
                 </div>
 
-                <div class="glass-card featured-card-border p-12 rounded-[2.5rem] flex flex-col justify-between transform lg:scale-[1.07] shadow-2xl z-20">
+                <div class="glass-card featured-card-border p-12 rounded-[2.5rem] flex flex-col justify-between transform lg:scale-[1.07] shadow-2xl z-20" style="border: 2px solid var(--color-primary-nebula);">
                     <span class="text-xl font-semibold mb-4 uppercase tracking-wider" style="color: var(--color-secondary-nebula);">PULSAR PRO</span>
                     <h3 class="text-7xl font-black mb-6 tracking-tighter" style="color: var(--color-accent-glow);">
                         R25<span class="text-3xl font-medium text-gray-300">/mo</span>
@@ -421,7 +421,6 @@ body {
                     </a>
                 </div>
 
- 
                 <div class="glass-card p-10 rounded-[2.5rem] flex flex-col justify-between hover:shadow-lg">
                     <span class="text-xl font-semibold mb-4 text-gray-400 uppercase tracking-wider">Galaxy Grid</span>
                     <h3 class="text-6xl font-black mb-6 text-white tracking-tighter">
@@ -440,7 +439,6 @@ body {
             </div>
         </div>
     </section>
-
 
     <footer id="contact" class="py-16 bg-black/70 border-t border-white/15 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -463,47 +461,47 @@ body {
     </footer>
 
     <script>
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes nebula-drift {
-                0% { background-position: 0% 0%; }
-                100% { background-position: 100% 100%; }
-            }
-        `;
-        document.head.appendChild(style);
+        const particleBg = document.querySelector('.particle-bg');
+        const numStars = 150; 
+        
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            const size = Math.random() * 2 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.opacity = `${Math.random() * 0.8 + 0.2}`;
 
-        // JavaScript for subtle scroll effect to enhance "smoother/better feel"
+
+            star.style.animation = `star-float ${Math.random() * 20 + 15}s ease-in-out infinite alternate`;
+            star.style.animationDelay = `-${Math.random() * 15}s`;
+
+            particleBg.appendChild(star);
+        }
         const serviceWrappers = document.querySelectorAll('.service-content-wrapper');
 
         function handleScroll() {
             serviceWrappers.forEach(wrapper => {
                 const rect = wrapper.getBoundingClientRect();
                 const viewHeight = window.innerHeight;
-
-                // Check if the element is in or near the viewport
                 if (rect.top < viewHeight * 0.9 && rect.bottom > viewHeight * 0.1) {
-                    // Calculate a scroll factor (0 at top of screen, 1 at bottom of screen)
                     const scrollFactor = (rect.top + rect.height / 2 - viewHeight / 2) / (viewHeight / 2);
-                    
-                    // Apply a slight transform for a subtle parallax/movement effect
-                    // Moves the content slightly as it passes the center of the screen
-                    const translateY = scrollFactor * 35; // Max 35px shift
-                    const opacity = 1 - Math.abs(scrollFactor * 0.2); // Slight opacity change
-
+                    const translateY = scrollFactor * 25;
+                    const opacity = 1 - Math.abs(scrollFactor * 0.2);
                     wrapper.style.transform = `translateY(${translateY}px)`;
                     wrapper.style.opacity = opacity;
                 } else {
-                     // Reset if far out of view
-                     wrapper.style.transform = `translateY(0px)`;
-                     wrapper.style.opacity = 0.8; // Start slightly faded
+                    wrapper.style.transform = `translateY(0px)`;
+                    wrapper.style.opacity = 0.8;
                 }
             });
         }
 
-        // Initialize and listen to scroll
         handleScroll();
         window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleScroll); // Recalculate on resize
+        window.addEventListener('resize', handleScroll);
     </script>
 </body>
 </html>
