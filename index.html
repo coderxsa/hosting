@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CODERXSA - SERVICE</title>
+    <title>CODERXSA - VPS Hosting & Automation</title>
+    <meta name="description" content="High-performance game server hosting and robust VPS solutions for ultimate control and automation.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚀%3C/text%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/CSSRulePlugin.min.js"></script>
 <style>
 
 :root {
-    --color-dark-void: #050308;
-    --color-primary-nebula: #7C3AED;
-    --color-secondary-nebula: #A78BFA;
-    --color-accent-glow: #3B82F6;
-    --color-text-light: #E2E8F0;
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-blur: 20px;
-    --glow-shadow-primary: rgba(124, 58, 237, 0.6); 
-    --glow-shadow-secondary: rgba(59, 130, 246, 0.4);
-    --soft-shadow: rgba(0, 0, 0, 0.9);
+    --color-dark-void: #020104;
+    --color-primary-nebula: #a855f7;
+    --color-secondary-nebula: #d8b4fe;
+    --color-accent-glow: #3b82f6;
+    --color-text-light: #F8FAFC;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-blur: 45px;
+    --glow-shadow-primary: rgba(168, 85, 247, 0.8);
+    --soft-shadow: rgba(0, 0, 0, 1);
 }
 
 body {
@@ -26,15 +30,17 @@ body {
     color: var(--color-text-light);
     font-family: 'Inter', sans-serif;
     background-image:
-        radial-gradient(at 10% 85%, var(--color-primary-nebula) 0px, transparent 50%),
-        radial-gradient(at 90% 20%, var(--color-accent-glow) 0px, transparent 60%),
-        radial-gradient(at 50% 100%, var(--color-secondary-nebula) 0px, transparent 65%);
+        radial-gradient(at 10% 85%, var(--color-primary-nebula) 0px, transparent 60%),
+        radial-gradient(at 90% 20%, var(--color-accent-glow) 0px, transparent 70%),
+        radial-gradient(at 50% 100%, var(--color-secondary-nebula) 0px, transparent 75%);
     background-blend-mode: soft-light;
+    background-size: 300% 300%;
+    animation: nebula-drift 60s linear infinite alternate;
     overflow-x: hidden;
 }
 
 * {
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.6s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .glass-card {
@@ -43,25 +49,21 @@ body {
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
-
-    border-radius: 20px;
-
+    border-radius: 24px;
     box-shadow:
-        0 10px 45px var(--soft-shadow),
-        0 0 40px var(--glow-shadow-primary);
-
-    transition: transform .5s cubic-bezier(.23, 1, .32, 1),
-                box-shadow .5s ease;
+        0 15px 50px 0 rgba(0, 0, 0, 0.5),
+        0 0 60px var(--glow-shadow-primary);
     overflow: hidden;
 }
 
 .glass-card:hover {
-    transform: translateY(-5px) scale(1.01);
-    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-10px) scale(1.015);
+    border-color: rgba(255, 255, 255, 0.7);
     box-shadow:
-        0 25px 90px rgba(0, 0, 0, 0.95),
-        0 0 60px var(--glow-shadow-primary);
+        0 40px 120px rgba(0, 0, 0, 1),
+        0 0 90px var(--glow-shadow-primary);
 }
+
 
 .glass-card::before {
     content: "";
@@ -74,10 +76,10 @@ body {
     background: linear-gradient(
         90deg,
         transparent,
-        rgba(255, 255, 255, 0.25),
+        rgba(255, 255, 255, 0.7),
         transparent
     );
-    transform: skewX(-20deg);
+    transform: skewX(-25deg);
     transition: 1.2s cubic-bezier(.16, 1, .3, 1);
     pointer-events: none;
 }
@@ -87,10 +89,18 @@ body {
 }
 
 
+.hero-title-glow {
+    text-shadow:
+        0 0 15px rgba(255, 255, 255, 0.6),
+        0 0 50px var(--color-accent-glow),
+        0 0 100px var(--color-primary-nebula);
+}
+
+
 @keyframes glow-pulse {
-    0% { box-shadow: 0 0 8px var(--color-accent-glow); }
-    50% { box-shadow: 0 0 20px var(--color-secondary-nebula), 0 0 40px var(--color-accent-glow); }
-    100% { box-shadow: 0 0 8px var(--color-accent-glow); }
+    0% { box-shadow: 0 0 10px var(--color-accent-glow); }
+    50% { box-shadow: 0 0 30px var(--color-secondary-nebula), 0 0 60px var(--color-accent-glow); }
+    100% { box-shadow: 0 0 10px var(--color-accent-glow); }
 }
 
 .glow-button {
@@ -99,33 +109,8 @@ body {
 }
 
 .glow-button:hover {
-    transform: scale(1.05);
-}
-
-
-.hero-title-glow {
-    text-shadow:
-        0 0 10px rgba(255, 255, 255, 0.5),
-        0 0 35px var(--color-accent-glow),
-        0 0 70px var(--color-primary-nebula),
-        0 0 120px rgba(124, 58, 237, 0.5);
-}
-
-
-.star {
-    position: absolute;
-    width: 1px; 
-    height: 1px;
-    background: #fff;
-    border-radius: 50%;
-    opacity: 0;
-    pointer-events: none;
-}
-
-@keyframes star-float {
-    0% { transform: translateY(0px) translateX(0px); opacity: .7; }
-    50% { transform: translateY(-50px) translateX(40px); opacity: 1; }
-    100% { transform: translateY(0px) translateX(0px); opacity: .7; }
+    transform: scale(1.07) translateY(-3px);
+    box-shadow: 0 0 40px var(--color-primary-nebula);
 }
 
 
@@ -134,378 +119,573 @@ body {
     100% { background-position: 100% 100%; }
 }
 
-.service-content-wrapper {
-    will-change: transform, opacity;
-    transition: transform 0.8s cubic-bezier(.16, 1, .3, 1), opacity 0.8s ease-out;
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: radial-gradient(circle, #ffffff, #d8b4fe);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 1);
+}
+
+@keyframes star-float {
+    0% { transform: translateY(0px) translateX(0px); opacity: .8; }
+    50% { transform: translateY(-90px) translateX(80px); opacity: 1; }
+    100% { transform: translateY(0px) translateX(0px); opacity: .8; }
+}
+
+.console-output::-webkit-scrollbar {
+    height: 6px;
+}
+.console-output::-webkit-scrollbar-thumb {
+    background: var(--color-primary-nebula);
+    border-radius: 10px;
+}
+.console-output::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
+.popular-ribbon {
+    position: absolute;
+    top: 25px;
+    right: -55px;
+    transform: rotate(45deg);
+    width: 220px;
+    text-align: center;
+    padding: 6px 0;
+    background: linear-gradient(90deg, #f59e0b, #ef4444);
+    color: white;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+    z-index: 10;
 }
 </style>
 
 </head>
 <body class="min-h-screen">
-    <nav class="sticky top-0 z-50 bg-black/70 backdrop-blur-3xl border-b border-white/15 shadow-2xl">
+    <nav class="sticky top-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/10 shadow-3xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24">
-                <div class="flex-shrink-0 text-4xl font-extrabold tracking-widest" style="
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 text-3xl font-extrabold tracking-widest" style="
                     background: linear-gradient(45deg, var(--color-accent-glow), var(--color-primary-nebula));
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
                 ">
                     CODERXSA
                 </div>
-                <div class="hidden md:flex space-x-12 text-lg font-medium">
-                    <a href="#services" class="text-white hover:text-sky-400 transition duration-300 transform hover:scale-105">Services</a>
-                    <a href="#about" class="text-white hover:text-sky-400 transition duration-300 transform hover:scale-105">About</a>
-                    <a href="#pricing" class="text-white hover:text-sky-400 transition duration-300 transform hover:scale-105">Pricing</a>
-                    <a href="#contact" class="text-white hover:text-sky-400 transition duration-300 transform hover:scale-105">Contact</a>
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex space-x-10 text-lg font-medium">
+                    <a href="#hero" class="text-white hover:text-sky-400 transition duration-300">Home</a>
+                    <a href="#services" class="text-white hover:text-sky-400 transition duration-300">Services</a>
+                    <a href="#pricing" class="text-white hover:text-sky-400 transition duration-300">VPS Plan</a>
+                    <a href="#trust" class="text-white hover:text-sky-400 transition duration-300">Why Us?</a>
+                    <a href="#features" class="text-white hover:text-sky-400 transition duration-300">Features</a>
                 </div>
-                <button class="md:hidden text-white p-2 focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-white p-2 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
                 </button>
             </div>
         </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/95">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
+                <a href="#hero" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">Home</a>
+                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">Services</a>
+                <a href="#pricing" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">VPS Plan</a>
+                <a href="#trust" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">Why Us?</a>
+                <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">Features</a>
+            </div>
+        </div>
     </nav>
-    
-    <header id="hero" class="relative min-h-screen flex items-center justify-center pb-24 overflow-hidden">
-        <div class="particle-bg absolute inset-0">
-             </div>
-        <div class="relative z-10 max-w-6xl mx-auto text-center px-4 pt-24">
+
+    <!-- Hero Section -->
+    <header id="hero" class="relative min-h-[95vh] flex items-center justify-center pb-24 overflow-hidden">
+        <div class="particle-bg absolute inset-0"></div>
+        <div class="relative z-10 max-w-7xl mx-auto text-center px-4 pt-24">
             
-            <h1 class="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-black mb-6 tracking-tighter leading-none hero-title-glow" style="
-                /* Remove white from gradient start to enhance transparent/etched look */
-                background: linear-gradient(45deg, var(--color-text-light), var(--color-accent-glow), var(--color-secondary-nebula));
+            <h1 class="text-7xl sm:text-8xl md:text-9xl font-black mb-8 tracking-tighter leading-none hero-title-glow" style="
+                background: linear-gradient(45deg, var(--color-text-light), var(--color-accent-glow), var(--color-primary-nebula));
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
-                padding-bottom: 2rem; /* Add padding for the glow */
             ">
-                CODERXSA
+                Panel
             </h1>
-            <p class="text-xl sm:text-3xl font-light text-gray-300 mb-12 max-w-4xl mx-auto" style="
-                text-shadow: 0 0 10px rgba(124, 58, 237, 0.4); /* Subtly lift the text */
+            <p class="text-xl sm:text-2xl font-light text-gray-300 mb-12 max-w-5xl mx-auto" style="
+                text-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
             ">
-                The ultimate nexus for <strong style="color: var(--color-accent-glow);">Hyper-Speed VPS</strong>, bespoke <strong style="color: var(--color-secondary-nebula);">Automation Solutions</strong>, and elite digital performance.
+                The CODERXSA - Panel is engineered for zero-latency operations, offering dedicated NVMe storage and guaranteed compute resources for your most demanding bots and applications.
             </p>
                 
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="#pricing" class="px-12 py-4 rounded-full font-extrabold text-xl text-white transition duration-500 glow-button uppercase"
-                    style="background: linear-gradient(90deg, var(--color-primary-nebula), var(--color-secondary-nebula));">
-                    Deploy Now
-                </a>
-                <a href="#services" class="px-12 py-4 rounded-full font-bold text-xl border-2 border-white/30 text-white hover:border-sky-400 transition duration-300 bg-white/5 backdrop-blur-sm uppercase">
-                    Learn More
-                </a>
-            </div>
-            
+            <a href="#pricing" class="px-16 py-5 rounded-full font-extrabold text-2xl text-white transition duration-500 glow-button uppercase inline-block"
+                style="background: linear-gradient(90deg, var(--color-primary-nebula), var(--color-accent-glow));">
+                Secure Your Elite Panel
+            </a>
         </div>
     </header>
 
     <div class="h-1 bg-gradient-to-r from-transparent via-violet-500 to-transparent w-full max-w-7xl mx-auto px-4 opacity-70"></div>
-
-    <section id="services" class="py-20 md:py-36">
+    <section id="services" class="py-24 md:py-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest text-shadow-lg" style="text-shadow: 0 0 15px var(--color-secondary-nebula);">
-                Services
+            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest" style="text-shadow: 0 0 15px var(--color-secondary-nebula);">
+                Integrated Dev Services
             </h2>
-            <p class="text-center text-gray-400 mb-24 text-lg">Engineered for speed, reliability, and automation.</p>
-            <div class="space-y-32">
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center service-content-wrapper">
-                    <div class="lg:pr-16">
-                        <div class="feature-icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mb-8 bg-gradient-to-br from-blue-400 to-indigo-600 shadow-2xl shadow-blue-400/40">
-                            <span class="text-4xl text-white">🚀</span>
-                        </div>
-                        <h3 class="text-4xl font-bold mb-4 text-white">High-Speed NVMe VPS Hosting</h3>
-                        <p class="text-gray-300 text-xl mb-8">
-                            Experience zero-compromise performance with dedicated NVMe SSDs, guaranteeing **ultra-low latency** and unparalleled reliability for mission-critical applications or demanding game servers.
-                        </p>
-                        <ul class="space-y-3 text-lg text-gray-400">
-                            <li class="flex items-center space-x-3"><span class="text-green-400 font-black">◎</span><span>Tier-1 Global Infrastructure</span></li>
-                            <li class="flex items-center space-x-3"><span class="text-green-400 font-black">◎</span><span>Root Access & Dedicated Resources</span></li>
-                        </ul>
+            <p class="text-center text-gray-400 mb-20 text-xl">
+                Everything you need, from managed hosting to custom automation bots.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Service Card 1: Web Hosting & Development -->
+                <div class="service-card glass-card p-8 text-left" style="border-color: rgba(216, 180, 254, 0.4);">
+                    <div class="w-16 h-16 mb-6 flex items-center justify-center rounded-xl bg-gradient-to-tr from-sky-500/50 to-indigo-600/50 shadow-xl border border-sky-400/40">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                     </div>
-                    <div class="glass-card p-6 rounded-3xl border-sky-400/50 hover:shadow-sky-400/40">
-                        <div class="h-80 bg-black/60 rounded-xl flex items-center justify-center border border-white/20">
-                            <pre class="text-sm sm:text-base text-green-300/90 p-6 font-mono w-full text-left overflow-auto">
-[user@coderxsa ~]$ <span style="color: var(--color-accent-glow);">systemctl status main_app</span>
-&#x25CF; main_app.service - Main Web Application
-   Loaded: loaded 
-   Active: <span class="text-green-500 font-bold">active (running)</span> since Mon 2025-11-24 14:00:00 UTC
-  Process: 1024 ExecStart=/usr/bin/node /home/app/index.js (code=exited, status=0/SUCCESS)
- Main PID: 1028 (node)
-    Tasks: 8 (limit: 4915)
-   Memory: 15.3M
-[user@coderxsa ~]$ <span style="color: var(--color-secondary-nebula);">uptime</span>
- 14:30:00 up 1 day, 2 hrs, 30 min
-                            </pre>
-                        </div>
-                    </div>
+                    <h3 class="text-3xl font-bold mb-4" style="color: var(--color-secondary-nebula);">Hyper-Speed Stacks</h3>
+                    <p class="text-gray-300 mb-8">
+                        Optimized hosting environments for high-traffic websites and complex web applications. Ready for Node.js, Python, PHP, and more.
+                    </p>
+                    <a href="#contact" class="text-lg font-semibold text-sky-400 hover:text-sky-300 transition duration-300 flex items-center space-x-2">
+                        <span>Explore Web Solutions</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center service-content-wrapper">
-                    <div class="glass-card p-6 rounded-3xl border-rose-400/50 lg:order-2 hover:shadow-rose-400/40">
-                        <div class="h-80 bg-black/60 rounded-xl flex flex-col items-center justify-center border border-white/20 p-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-6" style="color: var(--color-secondary-nebula);"><path d="M12 18V6"/><path d="M15 15l-3 3-3-3"/><path d="M9 9l3-3 3 3"/><path d="M21 12H3"/></svg>
-                            <p class="text-2xl font-bold text-white mb-2">WhatsApp / Gaming Automation</p>
-                            <p class="text-sm text-gray-400">Custom API integration for seamless workflow execution.</p>
-                            <div class="mt-4 bg-white/10 p-3 rounded-xl text-sm font-semibold" style="color: var(--color-primary-nebula);">
-                                Status: 99% Latency Score ⚡️
-                            </div>
-                        </div>
+                <!-- Service Card 2: Custom Automation & Scripts -->
+                <div class="service-card glass-card p-8 text-left" style="border-color: rgba(216, 180, 254, 0.4);">
+                    <div class="w-16 h-16 mb-6 flex items-center justify-center rounded-xl bg-gradient-to-tr from-purple-500/50 to-fuchsia-600/50 shadow-xl border border-fuchsia-400/40">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="m15 11-4 4"/><path d="m15 4-4 4"/><path d="m21 15-4 4"/><path d="m21 8-4 4"/><path d="m3 2l4 4"/><path d="m3 9 4 4"/><path d="M11 2h3"/><path d="M11 22h3"/><path d="M2 11v3"/><path d="M22 11v3"/></svg>
                     </div>
-                    <div class="lg:pr-16 lg:order-1">
-                        <div class="feature-icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mb-8 bg-gradient-to-br from-rose-500 to-purple-800 shadow-2xl shadow-rose-500/40">
-                            <span class="text-4xl text-white">🤖</span>
+                    <h3 class="text-3xl font-bold mb-4" style="color: var(--color-secondary-nebula);">Bespoke Automation</h3>
+                    <p class="text-gray-300 mb-8">
+                        From complex trading algorithms to gaming scripts and advanced data scraping—we build and host custom automated solutions securely.
+                    </p>
+                    <a href="https://host-nebula.onrender.com/" class="text-lg font-semibold text-sky-400 hover:text-sky-300 transition duration-300 flex items-center space-x-2">
+                        <span>Request Custom Bot</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <!-- Service Card 3: Technical Support & Setup -->
+                <div class="service-card glass-card p-8 text-left" style="border-color: rgba(216, 180, 254, 0.4);">
+                    <div class="w-16 h-16 mb-6 flex items-center justify-center rounded-xl bg-gradient-to-tr from-green-500/50 to-teal-600/50 shadow-xl border border-teal-400/40">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4" style="color: var(--color-secondary-nebula);">Managed Deployment</h3>
+                    <p class="text-gray-300 mb-8">
+                        Let us handle the OS setup, security hardening, and deployment. Our support team is ready 24/7 for complex configurations and troubleshooting.
+                    </p>
+                    <a href="#contact" class="text-lg font-semibold text-sky-400 hover:text-sky-300 transition duration-300 flex items-center space-x-2">
+                        <span>Get Priority Support</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <!-- Service Card 4: Android App for Non-CC Payments (NEW CARD - Requested by User) -->
+                <div class="service-card glass-card p-8 text-left">
+                    <div class="glass-panel p-8 rounded-xl service-card min-h-[300px] flex flex-col">
+                        <div class="w-16 h-16 mb-6 flex items-center justify-center rounded-xl bg-orange-500/30 shadow-lg border border-orange-400/30">
+                            <!-- Icon: Mobile/Payment -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-400"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
                         </div>
-                        <h3 class="text-4xl font-bold mb-4 text-white">Bespoke Bot Solutions</h3>
-                        <p class="text-gray-300 text-xl mb-8">
-                            From automating customer interactions via WhatsApp API to providing optimized Fortnite bot lobbies, we build specialized bots that deliver **efficiency** and a competitive edge.
+                        <h3 class="text-2xl font-bold mb-3 text-white">Risk-Free Mobile Payments</h3>
+                        <p class="text-gray-400 flex-grow mb-6">
+                            Use our dedicated Android app to pay for hosting via non-credit card methods (watching ads collecting coins.), ensuring privacy and maximum risk mitigation.
                         </p>
-                        <ul class="space-y-3 text-lg text-gray-400 mb-8">
-                            <li class="flex items-center space-x-3"><span class="text-green-400 font-black">◎</span><span>Customizable Flow Logic</span></li>
-                            <li class="flex items-center space-x-3"><span class="text-green-400 font-black">◎</span><span>Fully Scalable & Managed</span></li>
-                        </ul>
-                        <a href="https://host-nebula.onrender.com/" target="_blank" class="inline-flex items-center space-x-2 px-8 py-3 rounded-full font-extrabold text-white transition duration-500 glow-button uppercase text-lg"
-                            style="background: linear-gradient(90deg, var(--color-secondary-nebula), var(--color-primary-nebula));">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.54 2 2.08 6.47 2.08 12c0 2.22.78 4.31 2.22 5.92L2.73 22l4.13-1.42c1.55.85 3.32 1.34 5.18 1.34 5.5 0 9.96-4.47 9.96-9.96s-4.46-9.96-9.96-9.96zM17.47 16.5c-.24.57-1.42 1.15-2.07 1.25-.62.09-1.42.06-2.22-.44-1.07-.66-2.88-1.77-3.66-3.14-.78-1.37-.22-2.11-.2-2.35.03-.24.06-.52.27-.72.19-.19.44-.49.65-.72.2-.24.25-.49.38-.72.11-.2.04-.37-.02-.52-.06-.15-.57-1.37-.78-1.88-.34-.84-.71-.73-1.21-.73-.55 0-1.16-.01-1.63-.01-.48 0-1.28.18-1.74.83-.46.64-1.74 2.12-.78 3.86.96 1.74 2.89 3.86 4.7 4.54 1.8.69 3.03.54 3.7.49.66-.05 1.76-.74 2.01-1.4.24-.65.24-.59.16-.74z"/></svg>
-                            <span>Start WhatsApp Bot Setup</span>
+                        <a href="https://play.google.com/store/search?q=cryptalis" class="text-lg font-semibold text-sky-400 hover:text-sky-300 transition duration-300 flex items-center space-x-2 mt-auto">
+                            <span>Download Android App</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent w-full max-w-7xl mx-auto px-4 opacity-40"></div>
 
+    <!-- Why Choose Us / Trust Section (Enhanced Professional Look) -->
+    <section id="trust" class="py-24 md:py-40 bg-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest" style="text-shadow: 0 0 15px var(--color-accent-glow);">
+                Why CODERXSA is the Professional Choice
+            </h2>
+            <p class="text-center text-gray-400 mb-20 text-xl max-w-4xl mx-auto">
+                Dedicated infrastructure and expert support engineered for mission-critical tasks and rapid deployment.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                <!-- Feature 1: Reliability -->
+                <div class="glass-card p-8 text-center flex flex-col items-center" style="border-color: var(--color-primary-nebula); --glow-shadow-primary: rgba(168, 85, 247, 0.5);">
+                    <div class="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-purple-600/20 border-2 border-purple-400/50 shadow-lg shadow-purple-900/50">
+                        <!-- Shield Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white">Guaranteed 99.9% Uptime</h3>
+                    <p class="text-gray-400">
+                        Our strict Service Level Agreement (SLA) ensures your applications have dedicated stability and continuous availability.
+                    </p>
+                </div>
+                
+                <!-- Feature 2: NVMe Speed -->
+                <div class="glass-card p-8 text-center flex flex-col items-center" style="border-color: var(--color-primary-nebula); --glow-shadow-primary: rgba(59, 130, 246, 0.5);">
+                    <div class="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-blue-600/20 border-2 border-blue-400/50 shadow-lg shadow-blue-900/50">
+                        <!-- Bolt/Flash Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white">Pure NVMe & Dedicated Cores</h3>
+                    <p class="text-gray-400">
+                        Eliminate I/O wait times with state-of-the-art NVMe storage and prevent resource sharing bottlenecks with dedicated vCPU allocation.
+                    </p>
+                </div>
+                
+                <!-- Feature 3: Dedicated Support -->
+                <div class="glass-card p-8 text-center flex flex-col items-center" style="border-color: var(--color-primary-nebula); --glow-shadow-primary: rgba(16, 185, 129, 0.5);">
+                    <div class="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-green-600/20 border-2 border-green-400/50 shadow-lg shadow-green-900/50">
+                        <!-- Headset/Support Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm0-13a1 1 0 1 0 1 1 1 1 0 0 0-1-1zm0 5a1 1 0 0 0-1 1v2a1 1 0 0 0 2 0v-2a1 1 0 0 0-1-1z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white">24/7 Direct Administrator Access</h3>
+                    <p class="text-gray-400">
+                        No tiered support systems. Get immediate assistance from experienced system administrators for rapid, high-level issue resolution.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="android-app" class="py-20 md:py-36 bg-white/5 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest text-shadow-lg" style="text-shadow: 0 0 15px var(--color-accent-glow);">
-                Android App Access
+    <div class="h-1 bg-gradient-to-r from-transparent via-violet-500 to-transparent w-full max-w-7xl mx-auto px-4 opacity-70"></div>
+
+
+    <!-- Single VPS Pricing Section -->
+    <section id="pricing" class="py-24 md:py-40">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest" style="text-shadow: 0 0 15px var(--color-primary-nebula);">
+                PULSAR PRO: THE FLAGSHIP VPS
             </h2>
-            <p class="text-center text-gray-400 mb-24 text-lg">
-                Get our services on your Android device—fully free, risk-free, and with alternative payment options for VPS panels and Fortnite bot lobbies.
-            </p>
+            <p class="text-center text-gray-400 mb-20 text-xl">The single, uncompromising plan designed for maximum performance and professional deployment.</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+            <div class="glass-card featured-card p-8 sm:p-14 rounded-[3rem] flex flex-col justify-between shadow-2xl z-20 relative" style="border: 3px solid var(--color-primary-nebula); background: rgba(255, 255, 255, 0.04);">
                 
-                <div class="glass-card p-8 rounded-3xl border-sky-400/50 hover:shadow-sky-400/40 text-center">
-                    <div class="w-24 h-24 mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-sky-400 to-violet-500 rounded-full shadow-2xl">
-                        <span class="text-5xl text-white">📱</span>
+                <!-- MOST POPULAR RIBBON -->
+                <div class="popular-ribbon text-xl">
+                    MOST POPULAR CHOICE
+                </div>
+
+                <div class="text-center mb-10">
+                    <span class="text-2xl font-semibold mb-3 uppercase tracking-wider block" style="color: var(--color-secondary-nebula);">Dedicated Resources & Zero Latency</span>
+                    <h3 class="text-9xl font-black tracking-tighter" style="color: var(--color-accent-glow);">
+                        R35<span class="text-5xl font-medium text-gray-300">/mo</span>
+                    </h3>
+                    <p class="text-xl font-medium text-green-400 mt-4 mb-4">Unmetered Bandwidth. Guaranteed Resources.</p>
+                </div>
+                
+                <!-- Core Specs Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center mb-12">
+                    <div class="bg-white/10 p-5 rounded-xl border border-sky-500/30">
+                        <p class="text-4xl font-extrabold" style="color: var(--color-accent-glow);">1GB</p>
+                        <p class="text-sm text-gray-400 uppercase mt-1">Dedicated RAM</p>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-white">Mobile Control Panel</h3>
-                    <p class="text-gray-300">
-                        Manage VPS, deploy bots, and automate workflows directly from your Android device with a smooth, **responsive app interface**.
-                    </p>
-                </div>
-
-                <div class="glass-card p-8 rounded-3xl border-rose-400/50 hover:shadow-rose-400/40 text-center">
-                    <div class="w-24 h-24 mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-rose-500 to-purple-800 rounded-full shadow-2xl">
-                        <span class="text-5xl text-white">💾</span> </div>
-                    <h3 class="text-2xl font-bold mb-4 text-white">WhatsApp View Saver</h3>
-                    <p class="text-gray-300">
-                        Securely save images/videos from "View Once" WhatsApp messages and status updates directly to your device.
-                    </p>
-                </div>
-
-                <div class="glass-card p-8 rounded-3xl border-green-400/50 hover:shadow-green-400/40 text-center">
-                    <div class="w-24 h-24 mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-green-400 to-cyan-500 rounded-full shadow-2xl">
-                        <span class="text-5xl text-white">💳</span>
+                    <div class="bg-white/10 p-5 rounded-xl border border-sky-500/30">
+                        <p class="text-4xl font-extrabold" style="color: var(--color-accent-glow);">2x</p>
+                        <p class="text-sm text-gray-400 uppercase mt-1">vCPU Cores</p>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-white">Ad-Based Payments</h3>
-                    <p class="text-gray-300">
-                        Access premium features like VPS hosting and Fortnite bots without a credit card by watching **rewarded ads** in the app.
-                    </p>
+                    <div class="bg-white/10 p-5 rounded-xl border border-sky-500/30">
+                        <p class="text-4xl font-extrabold" style="color: var(--color-accent-glow);">1GB</p>
+                        <p class="text-sm text-gray-400 uppercase mt-1">NVMe Storage</p>
+                    </div>
+                    <div class="bg-white/10 p-5 rounded-xl border border-sky-500/30">
+                        <p class="text-4xl font-extrabold" style="color: var(--color-accent-glow);">∞</p>
+                        <p class="text-sm text-gray-400 uppercase mt-1">BANDWIDTH</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mt-16 text-center">
-                <a href="https://play.google.com/store/search?q=Cryptalis" class="inline-flex items-center space-x-2 px-12 py-4 rounded-full font-extrabold text-white transition duration-500 glow-button uppercase text-xl"
-                    style="background: linear-gradient(90deg, var(--color-primary-nebula), var(--color-secondary-nebula));">
-                    <span>Download Android App</span>
+                <!-- Features List -->
+                <ul class="space-y-4 text-left mb-10 flex-grow text-lg text-white font-medium">
+                    <li class="flex items-start space-x-3">
+                        <span style="color: var(--color-secondary-nebula);" class="font-black text-xl flex-shrink-0 mt-0.5">🚀</span>
+                        <span class="hover:text-gray-300">Full Root Access (SSH) & Advanced API Control</span>
+                    </li>
+                    <li class="flex items-start space-x-3">
+                        <span style="color: var(--color-secondary-nebula);" class="font-black text-xl flex-shrink-0 mt-0.5">🛡️</span>
+                        <span class="hover:text-gray-300">DDoS Protection & Enterprise-Grade Security Suite</span>
+                    </li>
+                    <li class="flex items-start space-x-3">
+                        <span style="color: var(--color-secondary-nebula);" class="font-black text-xl flex-shrink-0 mt-0.5">🔧</span>
+                        <span class="hover:text-gray-300">Managed OS Installation and Expert Deployment Support</span>
+                    </li>
+                </ul>
+
+                <a href="https://soon/" target="_blank" class="w-full text-center py-5 rounded-full font-black text-2xl text-white transition duration-500 glow-button uppercase"
+                    style="background: linear-gradient(90deg, var(--color-secondary-nebula), var(--color-accent-glow));">
+                    DEPLOY PULSAR PRO
                 </a>
             </div>
         </div>
     </section>
-
-    <div class="h-1 bg-gradient-to-r from-transparent via-violet-500 to-transparent w-full max-w-7xl mx-auto px-4 opacity-40"></div>
-
-    <section id="fortnite-private" class="py-20 md:py-36 bg-white/[0.03] backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest text-shadow-lg" style="text-shadow: 0 0 15px var(--color-secondary-nebula);">
-                Fortnite Bot Lobby Access (Elite)
-            </h2>
-            <p class="text-center text-gray-400 mb-20 text-lg">Guaranteed easy XP and challenge completion with dedicated servers.</p>
-
-            <div class="flex justify-center">
-                <div class="glass-card p-12 rounded-[3rem] w-full max-w-3xl border-sky-400/50 hover:shadow-2xl hover:shadow-sky-400/50 transform hover:scale-[1.03] transition duration-500">
-                    <div class="text-center">
-                        <div class="feature-icon-wrapper w-24 h-24 rounded-full flex items-center justify-center mb-8 mx-auto bg-gradient-to-br from-cyan-500 to-indigo-700 shadow-2xl shadow-cyan-500/40">
-                            <span class="text-5xl text-white">🏆</span>
-                        </div>
-                        <h3 class="text-4xl font-black mb-4 tracking-tighter" style="color: var(--color-accent-glow);">Private Matchmaker Access</h3>
-                        <p class="text-xl text-gray-300 mb-10">
-                            Bypass **SBMM (Skill-Based Matchmaking)** and join lobbies designed exclusively for easy gameplay, fast leveling, and V-Buck earning.
-                        </p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                        <div class="bg-white/5 p-4 rounded-xl border border-sky-500/30">
-                            <p class="font-semibold text-white text-lg flex items-center space-x-2"><span class="text-sky-400 font-bold text-xl">★</span><span>Guaranteed Bot Lobbies</span></p>
-                            <p class="text-sm text-gray-400">Consistent access for non-stop action and high kill games.</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-xl border border-sky-500/30">
-                            <p class="font-semibold text-white text-lg flex items-center space-x-2"><span class="text-sky-400 font-bold text-xl">★</span><span>Max XP Gain</span></p>
-                            <p class="text-sm text-gray-400">Optimize for Battle Pass completion speed.</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-xl border border-sky-500/30">
-                            <p class="font-semibold text-white text-lg flex items-center space-x-2"><span class="text-sky-400 font-bold text-xl">★</span><span>Cross-Platform Compatible</span></p>
-                            <p class="text-sm text-gray-400">Works seamlessly on PC, Console, and Mobile.</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-xl border border-sky-500/30">
-                            <p class="font-semibold text-white text-lg flex items-center space-x-2"><span class="text-sky-400 font-bold text-xl">★</span><span>Instant Setup & Delivery</span></p>
-                            <p class="text-sm text-gray-400">Get playing within minutes of purchase.</p>
-                        </div>
-                    </div>
-
-                    <a href="#contact" class="w-full text-center py-5 rounded-full font-black text-xl text-white transition duration-500 glow-button uppercase"
-                        style="background: linear-gradient(90deg, var(--color-accent-glow), var(--color-secondary-nebula));">
-                        Unlock Elite Access
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
+    
     <div class="h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent w-full max-w-7xl mx-auto px-4 opacity-40"></div>
 
-
-    <section id="pricing" class="py-20 md:py-36">
+    <!-- Technical & Automation Features Section -->
+    <section id="features" class="py-24 md:py-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest text-shadow-lg" style="text-shadow: 0 0 15px var(--color-primary-nebula);">
-                Pricing Vps (SOON)
+            <h2 class="text-5xl font-extrabold text-center mb-6 text-white uppercase tracking-widest" style="text-shadow: 0 0 15px var(--color-accent-glow);">
+                Platform Integration & Control
             </h2>
-            <p class="text-center text-gray-400 mb-20 text-lg">Transparent costs for exceptional performance.</p>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-stretch">
-
-                <div class="glass-card p-10 rounded-[2.5rem] flex flex-col justify-between hover:shadow-lg">
-                    <span class="text-xl font-semibold mb-4 text-gray-400 uppercase tracking-wider">Nebula Nano</span>
-                    <h3 class="text-6xl font-black mb-6 text-white tracking-tighter">
-                        R20<span class="text-2xl font-medium text-gray-400">/mo</span>
-                    </h3>
-                    <p class="text-center text-lg font-medium text-green-400 mt-[-1rem] mb-6">+ Cryptalis app 5k coins/week (Free Option)</p>
-                    <ul class="space-y-4 text-left mb-10 flex-grow text-gray-300">
-                        <li class="flex items-center space-x-3"><span class="text-green-400 font-bold text-lg">✓</span><span>Basic VPS Panel Access</span></li>
-                        <li class="flex items-center space-x-3"><span class="text-green-400 font-bold text-lg">✓</span><span>1GB RAM, 1 vCPU</span></li>
-                        <li class="flex items-center space-x-3"><span class="text-green-400 font-bold text-lg">✓</span><span>1GB Bandwidth</span></li>
-                        <li class="flex items-center space-x-3"><span class="text-green-400 font-bold text-lg">✓</span><span>Community Support</span></li>
+            <p class="text-center text-gray-400 mb-24 text-lg">Every feature is designed for professional ease and maximum technical control.</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <!-- Feature 1: Console -->
+                <div class="lg:pr-16" id="feature-console">
+                    <div class="feature-icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mb-8 bg-gradient-to-br from-blue-400 to-indigo-600 shadow-2xl shadow-blue-400/40">
+                        <span class="text-4xl text-white">📡</span>
+                    </div>
+                    <h3 class="text-4xl font-bold mb-4 text-white">Integrated Console & Metrics</h3>
+                    <p class="text-gray-300 text-xl mb-8">
+                        Our panel gives you a direct, secure SSH terminal in your browser, alongside sophisticated, visual metrics for CPU load, I/O performance, and network latency.
+                    </p>
+                    <ul class="space-y-3 text-lg text-gray-400">
+                        <li class="flex items-center space-x-3"><span class="text-green-400 font-black">✓</span><span>Full Shell Access via Web Panel</span></li>
+                        <li class="flex items-center space-x-3"><span class="text-green-400 font-black">✓</span><span>Advanced Resource Consumption Charts</span></li>
+                        <li class="flex items-center space-x-3"><span class="text-green-400 font-black">✓</span><span>Instant OS Reinstallation Options</span></li>
                     </ul>
-                    <a href="#" class="w-full text-center py-4 rounded-full font-bold text-lg bg-white/10 hover:bg-white/20 transition duration-300 uppercase">
-                        Choose Nano
-                    </a>
+                </div>
+                <!-- Console Simulation Card -->
+                <div class="glass-card p-6 rounded-3xl border-sky-400/50 hover:shadow-sky-400/40">
+                    <div class="h-80 bg-black/70 rounded-xl flex flex-col justify-between border border-white/30 p-4 shadow-inner shadow-white/10">
+                        <div class="flex space-x-2 pb-2">
+                            <div class="w-3.5 h-3.5 bg-red-500 rounded-full"></div>
+                            <div class="w-3.5 h-3.5 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3.5 h-3.5 bg-green-500 rounded-full"></div>
+                        </div>
+                        <pre class="console-output text-sm sm:text-base text-green-300/90 font-mono w-full text-left overflow-x-auto whitespace-pre-wrap flex-grow">
+<span style="color: var(--color-accent-glow);">[user@coderxsa ~]$</span> systemctl status bot_service
+<span style="color: #6EE7B7;">bot_service.service</span> - Automated Script Handler
+   Loaded: loaded (/etc/systemd/system/bot_service.service; enabled; vendor preset: enabled)
+   Active: <span style="color: #10B981;">active (running)</span> since Mon 2025-10-21 14:30:00 SAST; 24 days ago
+ Main PID: 452 (python3)
+    Tasks: 4
+   Memory: 1.2G
+<span style="color: var(--color-accent-glow);">[user@coderxsa ~]$</span> top -n 1 | grep python3
+  452 user      20   0 1.5g 1.2g  30m S 12.3 60.1   0:15.68 python3
+<span style="color: var(--color-accent-glow);">[user@coderxsa ~]$</span> netstat -tuln | grep 8080
+tcp        0      0 0.0.0.0:8080            0.0.0.0:* LISTEN     
+<span style="color: var(--color-accent-glow);">[user@coderxsa ~]$</span> 
+                        </pre>
+                    </div>
                 </div>
 
-                <div class="glass-card featured-card-border p-12 rounded-[2.5rem] flex flex-col justify-between transform lg:scale-[1.07] shadow-2xl z-20" style="border: 2px solid var(--color-primary-nebula);">
-                    <span class="text-xl font-semibold mb-4 uppercase tracking-wider" style="color: var(--color-secondary-nebula);">PULSAR PRO</span>
-                    <h3 class="text-7xl font-black mb-6 tracking-tighter" style="color: var(--color-accent-glow);">
-                        R35<span class="text-3xl font-medium text-gray-300">/mo</span>
-                    </h3>
-                    <p class="text-center text-lg font-medium text-green-400 mt-[-1rem] mb-6">+ Cryptalis app 10k coins/week (Free Option)</p>
-                    <ul class="space-y-4 text-left mb-10 flex-grow text-white">
-                        <li class="flex items-center space-x-3"><span style="color: var(--color-secondary-nebula);" class="font-black text-xl">★</span><span class="font-semibold">Full VPS Hosting & Panel</span></li>
-                        <li class="flex items-center space-x-3"><span style="color: var(--color-secondary-nebula);" class="font-black text-xl">★</span><span class="font-semibold">2GB RAM, 2 vCPU</span></li>
-                        <li class="flex items-center space-x-3"><span style="color: var(--color-secondary-nebula);" class="font-black text-xl">★</span><span class="font-semibold">Unlimited Bandwidth</span></li>
-                        <li class="flex items-center space-x-3"><span style="color: var(--color-secondary-nebula);" class="font-black text-xl">★</span><span class="font-semibold">24/7 Priority Support</span></li>
-                        <li class="flex items-center space-x-3"><span style="color: var(--color-secondary-nebula);" class="font-black text-xl">★</span><span class="font-semibold">Free Bot Integration Setup</span></li>
+                <!-- Feature 2: Automation -->
+                <div class="lg:order-3" id="feature-automation">
+                    <div class="feature-icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mb-8 bg-gradient-to-br from-rose-500 to-purple-800 shadow-2xl shadow-rose-500/40">
+                        <span class="text-4xl text-white">🤖</span>
+                    </div>
+                    <h3 class="text-4xl font-bold mb-4 text-white">One-Click Deployments</h3>
+                    <p class="text-gray-300 text-xl mb-8">
+                        Utilize our pre-configured templates for instant deployment of popular applications, game servers, or custom automation scripts. Get from purchase to production in minutes.
+                    </p>
+                    <ul class="space-y-3 text-lg text-gray-400 mb-8">
+                        <li class="flex items-center space-x-3"><span class="text-green-400 font-black">✓</span><span>Docker Ready</span></li>
+                        <li class="flex items-center space-x-3"><span class="text-green-400 font-black">✓</span><span>Pre-built Image Library</span></li>
+                        <li class="flex items-center space-x-3"><span class="text-green-400 font-black">✓</span><span>Scheduled Script Execution</span></li>
                     </ul>
-                    <a href="#" class="w-full text-center py-4 rounded-full font-black text-xl text-white transition duration-500 glow-button uppercase"
-                        style="background: linear-gradient(90deg, var(--color-secondary-nebula), var(--color-accent-glow));">
-                        Go Pro (Recommended)
-                    </a>
                 </div>
-
-                <div class="glass-card p-10 rounded-[2.5rem] flex flex-col justify-between hover:shadow-lg">
-                    <span class="text-xl font-semibold mb-4 text-gray-400 uppercase tracking-wider">Galaxy Grid</span>
-                    <h3 class="text-6xl font-black mb-6 text-white tracking-tighter">
-                        R45<span class="text-2xl font-medium text-gray-400">/mo</span>
-                    </h3>
-                    <p class="text-center text-lg font-medium text-green-400 mt-[-1rem] mb-6">+ Cryptalis app 15k coins/week (Free Option)</p>
-                    <ul class="space-y-4 text-left mb-10 flex-grow text-gray-300">
-                        <li class="flex items-center space-x-3"><span class="text-green-400 font-bold text-lg">✓</span><span>Enterprise VPS Access</span></li>
-                        <li class="flex items-center space-x-3"><span class="text-green-400 font-bold text-lg">✓</span><span>4GB RAM, 4 vCPU</span></li>
-                        <li class="flex items-center space-x-3"><span class="text-green-400 font-bold text-lg">✓</span><span>Dedicated IP (Add-on)</span></li>
-                        <li class="flex items-center space-x-3"><span class="text-green-400 font-bold text-lg">✓</span><span>Priority Bot Integration Support</span></li>
-                    </ul>
-                    <a href="#" class="w-full text-center py-4 rounded-full font-bold text-lg bg-white/10 hover:bg-white/20 transition duration-300 uppercase">
-                        Choose Grid
-                    </a>
+                <!-- Automation Card -->
+                <div class="glass-card p-6 rounded-3xl border-rose-400/50 hover:shadow-rose-400/40 lg:order-4">
+                    <div class="h-80 bg-black/70 rounded-xl flex flex-col items-center justify-center border border-white/30 p-6 shadow-inner shadow-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-6" style="color: var(--color-secondary-nebula);"><path d="M12 18V6"/><path d="M15 15l-3 3-3-3"/><path d="M9 9l3-3 3 3"/><path d="M21 12H3"/></svg>
+                        <p class="text-3xl font-bold text-white mb-2">System Ready</p>
+                        <p class="text-lg text-gray-400">All services configured and deployed successfully.</p>
+                        <div class="mt-8 p-4 rounded-xl text-2xl font-semibold bg-green-600/30 border border-green-400/50 text-green-300 shadow-lg shadow-green-700/30">
+                            Status: <span class="font-bold">Online</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer / Contact Section -->
     <footer id="contact" class="py-16 bg-black/70 border-t border-white/15 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <p class="text-2xl font-bold mb-6 uppercase tracking-wider" style="color: var(--color-primary-nebula);">Initiate Contact</p>
-            <div class="flex justify-center space-x-10 text-gray-400 text-xl font-medium">
-                <a href="#" class="hover:text-sky-400 transition duration-300">Discord</a>
-                <a href="#" class="hover:text-sky-400 transition duration-300">Email</a>
-                <a href="#" class="hover:text-sky-400 transition duration-300">X (Twitter)</a>
+            <h2 class="text-4xl font-extrabold mb-8 uppercase tracking-wider" style="color: var(--color-primary-nebula);">Questions? Connect with our team.</h2>
+            
+            <a href="#pricing" class="px-12 py-4 rounded-full font-bold text-xl text-white transition duration-500 glow-button uppercase inline-block mb-12"
+                style="background: linear-gradient(90deg, var(--color-accent-glow), var(--color-secondary-nebula));">
+                ORDER PULSAR PRO
+            </a>
+
+            <div class="flex justify-center space-x-12 text-gray-400 text-xl font-medium">
+                <!-- Working links/placeholders -->
+                <a href="https://discord.gg/yourserver" target="_blank" class="hover:text-sky-400 transition duration-300 flex items-center space-x-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M14.82 2.76c-1.12.51-2.09 1.25-2.79 2.16-1.14-1.1-2.61-1.92-4.14-2.16-1.55.24-3.02 1.06-4.16 2.16-.7-.91-1.67-1.65-2.79-2.16C.76 5.06 0 9.77 0 12c0 4.14 2.16 7.84 5.37 10.32 1.35-1.55 2.19-3.26 2.65-5.07.72.63 1.58 1.14 2.53 1.48v2.01l.95.8c.45.36 1.02.56 1.62.56.6 0 1.17-.2 1.62-.56l.95-.8v-2.01c.95-.34 1.81-.85 2.53-1.48.46 1.81 1.3 3.52 2.65 5.07 3.21-2.48 5.37-6.18 5.37-10.32 0-2.23-.76-6.94-2.21-9.24zm-6.1 11.23c-.76 0-1.39-.63-1.39-1.39s.63-1.39 1.39-1.39 1.39.63 1.39 1.39-.63 1.39-1.39 1.39zm7.1 0c-.76 0-1.39-.63-1.39-1.39s.63-1.39 1.39-1.39 1.39.63 1.39 1.39-.63 1.39-1.39 1.39z"/></svg>
+                    <span>Discord Chat</span>
+                </a>
+                <a href="mailto:support@coderxsa.com" class="hover:text-sky-400 transition duration-300 flex items-center space-x-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    <span>Email Support</span>
+                </a>
             </div>
-            <div class="mt-12 text-sm text-gray-600">
-                &copy; 2025 CODERXSA. All rights reserved. | <a href="#" class="hover:text-sky-400">Legal & Terms</a>
+            <div class="mt-16 text-base text-gray-600">
+                &copy; 2025 CODERXSA. All rights reserved. | <a href="#" class="hover:text-sky-400">Privacy Policy</a>
             </div>
         </div>
-
-        <div class="absolute inset-0 z-0 opacity-10" style="
-            background: radial-gradient(circle at 10% 90%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 90% 10%, rgba(249, 168, 212, 0.1) 0%, transparent 50%);
-            animation: nebula-drift 30s linear infinite alternate;
-        "></div>
     </footer>
 
     <script>
+        // --- Particle/Star Field Generation ---
         const particleBg = document.querySelector('.particle-bg');
-        // IMPROVED: Increased number of stars for more particles
-        const numStars = 350; 
-        
+        const numStars = 400;
+
         for (let i = 0; i < numStars; i++) {
             const star = document.createElement('div');
             star.classList.add('star');
             star.style.top = `${Math.random() * 100}%`;
             star.style.left = `${Math.random() * 100}%`;
-            const size = Math.random() * 2 + 1;
+            const size = Math.random() * 2.5 + 1.5; // Slightly larger stars
             star.style.width = `${size}px`;
             star.style.height = `${size}px`;
-            star.style.opacity = `${Math.random() * 0.8 + 0.2}`;
+            star.style.opacity = `${Math.random() * 0.9 + 0.4}`;
 
-
-            star.style.animation = `star-float ${Math.random() * 20 + 15}s ease-in-out infinite alternate`;
-            star.style.animationDelay = `-${Math.random() * 15}s`;
+            star.style.animation = `star-float ${Math.random() * 25 + 20}s ease-in-out infinite alternate`;
+            star.style.animationDelay = `-${Math.random() * 25}s`;
 
             particleBg.appendChild(star);
         }
-        const serviceWrappers = document.querySelectorAll('.service-content-wrapper');
 
-        function handleScroll() {
-            serviceWrappers.forEach(wrapper => {
-                const rect = wrapper.getBoundingClientRect();
-                const viewHeight = window.innerHeight;
-                if (rect.top < viewHeight * 0.9 && rect.bottom > viewHeight * 0.1) {
-                    const scrollFactor = (rect.top + rect.height / 2 - viewHeight / 2) / (viewHeight / 2);
-                    const translateY = scrollFactor * 25;
-                    const opacity = 1 - Math.abs(scrollFactor * 0.2);
-                    wrapper.style.transform = `translateY(${translateY}px)`;
-                    wrapper.style.opacity = opacity;
-                } else {
-                    wrapper.style.transform = `translateY(0px)`;
-                    wrapper.style.opacity = 0.8;
+        // --- GSAP Scroll-Based Animation (Smoothness and Parallax) ---
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Define the main content wrapper (everything after the hero)
+        const mainContent = document.body.querySelector('main, section, footer');
+
+        function setupScrollAnimations() {
+
+            // Global Parallax Effect for main sections (subtle 3D feel)
+            gsap.utils.toArray("section").forEach((section, i) => {
+                if (section.id !== 'hero') {
+                    gsap.to(section, {
+                        y: -50, // Move element up slightly
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top bottom", // when top of section hits bottom of viewport
+                            end: "bottom top",   // when bottom of section hits top of viewport
+                            scrub: 1.5, // smooth scrubbing
+                        },
+                    });
                 }
             });
-        }
 
-        handleScroll();
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleScroll);
+
+            // Animate Service Cards
+            gsap.utils.toArray(".service-card").forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    },
+                    duration: 1.2,
+                    y: 70,
+                    opacity: 0,
+                    scale: 0.9,
+                    ease: "power3.out",
+                    delay: i * 0.2 // Stagger the animation
+                });
+            });
+            
+            // Animate Trust Cards
+            gsap.utils.toArray("#trust .glass-card").forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    },
+                    duration: 1.2,
+                    y: 70,
+                    opacity: 0,
+                    scale: 0.9,
+                    ease: "power3.out",
+                    delay: i * 0.15 // Stagger the animation
+                });
+            });
+
+            // Animate the main pricing card
+            gsap.from(".featured-card", {
+                scrollTrigger: {
+                    trigger: "#pricing",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                duration: 1.8,
+                y: 100,
+                opacity: 0,
+                scale: 0.9,
+                rotationX: 10,
+                ease: "power4.out"
+            });
+
+            // Animate features
+            gsap.utils.toArray("#features > div > div").forEach((element, i) => {
+                gsap.from(element, {
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 90%",
+                        end: "bottom 10%",
+                        toggleActions: "play none none none"
+                    },
+                    duration: 1.5,
+                    x: i % 2 === 0 ? -150 : 150, // Slide in from left/right
+                    opacity: 0,
+                    ease: "power3.out",
+                    delay: 0.2 * i
+                });
+            });
+        }
+        
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // --- Smooth Scrolling for Navigation Links ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                // Close mobile menu first if open
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+                
+                // Get the target element, compensating for the fixed header height (80px)
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    const offset = 80; // Height of the fixed nav
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - offset;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize GSAP animations on window load
+        window.onload = setupScrollAnimations;
     </script>
 </body>
 </html>
